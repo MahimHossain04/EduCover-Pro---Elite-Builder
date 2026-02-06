@@ -18,15 +18,30 @@ const fieldConfigs = [
     { id: 'date', label: 'Submission Date', prefix: '', sz: 15, type: 'date', align: 'left', pos: 'bottom' }
 ];
 
+// Generate Sidebar Inputs
 fieldConfigs.forEach(f => {
     const container = document.getElementById(f.pos === 'top' ? 'top-fields' : 'bottom-fields');
     const div = document.createElement('div');
     div.className = 'input-card';
-    div.innerHTML = `<label>${f.label}</label><input type="${f.type || 'text'}" class="text-input" id="in-${f.id}" oninput="updateView('${f.id}')"><div class="style-tools"><select id="font-${f.id}" onchange="updateView('${f.id}')"><option value="Arial">Arial</option><option value="'Times New Roman'">TNR</option></select>Size: <input type="number" id="sz-${f.id}" value="${f.sz}" oninput="updateView('${f.id}')"><button class="btn-tool active" id="b-${f.id}" onclick="toggleS('${f.id}','b')">B</button><button class="btn-tool ${f.align==='center'?'active':''}" id="al-${f.id}-center" onclick="setAlign('${f.id}','center')">C</button></div>`;
+    div.innerHTML = `
+        <label>${f.label}</label>
+        <input type="${f.type || 'text'}" class="text-input" id="in-${f.id}" oninput="updateView('${f.id}')">
+        <div class="style-tools">
+            <select id="font-${f.id}" onchange="updateView('${f.id}')">
+                <option value="Arial">Arial</option>
+                <option value="'Times New Roman'">TNR</option>
+            </select>
+            Size: <input type="number" id="sz-${f.id}" value="${f.sz}" oninput="updateView('${f.id}')">
+            <button class="btn-tool active" id="b-${f.id}" onclick="toggleS('${f.id}','b')">B</button>
+            <button class="btn-tool ${f.align==='center'?'active':''}" id="al-${f.id}-center" onclick="setAlign('${f.id}','center')">C</button>
+        </div>`;
     container.appendChild(div);
 });
 
-function resizeLogo(val) { document.getElementById('viewLogo').style.width = val + 'px'; document.getElementById('sizeVal').innerText = val + 'px'; }
+function resizeLogo(val) { 
+    document.getElementById('viewLogo').style.width = val + 'px'; 
+    document.getElementById('sizeVal').innerText = val + 'px'; 
+}
 
 function setAlign(id, align) {
     const target = document.getElementById(`out-${id}`);
@@ -36,37 +51,48 @@ function setAlign(id, align) {
     if(btn) btn.classList.add('active');
 }
 
-function toggleS(id, type) { document.getElementById(`${type}-${id}`).classList.toggle('active'); updateView(id); }
+function toggleS(id, type) { 
+    document.getElementById(`${type}-${id}`).classList.toggle('active'); 
+    updateView(id); 
+}
 
 function updateView(id) {
     const config = fieldConfigs.find(c => c.id === id) || { prefix: '' };
     const val = (id === 'uni') ? document.getElementById('in-uni').value : document.getElementById(`in-${id}`).value;
     const target = document.getElementById(`out-${id}`);
+    
     if (val.trim() !== "") {
         target.classList.add('visible');
         if(id === 'sem') document.getElementById('spacer-sem').style.display = 'block';
         if(['teach', 'me'].includes(id)) document.getElementById('out-sub-info').classList.add('visible');
         if(id === 'date') document.getElementById('out-date-box').classList.add('visible');
+        
         target.innerHTML = (id === 'uni' || config.prefix === '' ? val : config.prefix + val);
         target.style.fontSize = document.getElementById(`sz-${id}`).value + "px";
         target.style.fontWeight = document.getElementById(`b-${id}`).classList.contains('active') ? "bold" : "normal";
         target.style.fontFamily = document.getElementById(`font-${id}`)?.value || 'Arial';
-    } else target.classList.remove('visible');
+    } else {
+        target.classList.remove('visible');
+        if(id === 'sem') document.getElementById('spacer-sem').style.display = 'none';
+    }
 }
 
 function updateLabelType() {
     const val = document.getElementById('in-label-type').value;
     const target = document.getElementById('out-label-box');
-    if(val !== "") { target.innerHTML = val; target.classList.add('visible'); } else target.classList.remove('visible');
+    if(val !== "") { target.innerHTML = val; target.classList.add('visible'); } 
+    else target.classList.remove('visible');
 }
 
 function addMember() {
     const id = Date.now();
     const div = document.createElement('div');
     div.className = 'member-entry';
-        div.id = `row-${id}`;
-        div.classList.add('member-entry');
-        div.innerHTML = `<input type="text" placeholder="Name" class="text-input" oninput="updateMembers()"><input type="text" placeholder="ID" class="text-input" oninput="updateMembers()"><button class="btn-remove" onclick="this.parentElement.remove(); updateMembers();">×</button>`;
+    div.id = `row-${id}`;
+    div.innerHTML = `
+        <input type="text" placeholder="Name" class="text-input" oninput="updateMembers()">
+        <input type="text" placeholder="ID" class="text-input" oninput="updateMembers()">
+        <button class="btn-remove" onclick="this.parentElement.remove(); updateMembers();">×</button>`;
     document.getElementById('member-inputs').appendChild(div);
 }
 
@@ -78,35 +104,45 @@ function updateMembers() {
     let hasData = false;
     entries.forEach(entry => {
         const ins = entry.querySelectorAll('input');
-        if (ins[0].value || ins[1].value) { hasData = true; tbody.innerHTML += `<tr><td>${ins[0].value}</td><td>${ins[1].value}</td></tr>`; }
+        if (ins[0].value || ins[1].value) { 
+            hasData = true; 
+            tbody.innerHTML += `<tr><td>${ins[0].value}</td><td>${ins[1].value}</td></tr>`; 
+        }
     });
     table.classList.toggle('visible', hasData);
 }
 
 document.getElementById('logoIn').onchange = (e) => {
     const r = new FileReader();
-    r.onload = res => { document.getElementById('viewLogo').src = res.target.result; document.getElementById('out-logo-box').classList.add('visible'); };
+    r.onload = res => { 
+        document.getElementById('viewLogo').src = res.target.result; 
+        document.getElementById('out-logo-box').classList.add('visible'); 
+    };
     r.readAsDataURL(e.target.files[0]);
 };
 
+
 function downloadPDF() {
     const element = document.getElementById('page-render');
-
+    
+    
     const opt = {
         margin: 0,
         filename: 'EduCover_Pro.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
+        image: { type: 'jpeg', quality: 1.0 },
         html2canvas: { 
-            scale: 3, 
+            scale: 2, 
             useCORS: true, 
             letterRendering: true,
-            logging: false,
-            scrollY: 0
+            scrollX: 0,
+            scrollY: 0,
+            windowWidth: document.documentElement.offsetWidth
         },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
 
-    html2pdf().from(element).set(opt).save();
+    
+    setTimeout(() => {
+        html2pdf().from(element).set(opt).save();
+    }, 300);
 }
-
-
