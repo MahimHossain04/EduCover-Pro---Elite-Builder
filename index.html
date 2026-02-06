@@ -1,56 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- =========================
+         Meta & Title
+    ========================== -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduCover Pro - Elite Builder</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- =========================
+         Fonts & Icons
+    ========================== -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet"
+    >
     <link rel="icon" type="image/x-icon" href="icons/icon.ico">
+
+    <!-- =========================
+         Styles & Scripts
+    ========================== -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
+
 <body>
 
+    <!-- =========================
+         Sidebar / Controls
+    ========================== -->
     <aside class="sidebar">
-        <h2>EduCover Pro Pro</h2>
-        
+
+        <h2>EduCover Pro</h2>
+
+        <!-- Page Settings -->
         <div class="input-card">
             <label>Page Settings</label>
-            <select id="pageSizeSelect" class="select-input" onchange="changePageSize(this.value)">
+            <select
+                id="pageSizeSelect"
+                class="select-input"
+                onchange="changePageSize(this.value)"
+            >
                 <option value="a4">A4 Standard</option>
                 <option value="letter">Letter</option>
                 <option value="legal">Legal</option>
             </select>
         </div>
 
+        <!-- Logo Upload -->
         <div class="input-card">
             <label>Upload Logo</label>
             <input type="file" id="logoIn" accept="image/*">
+
             <div class="style-tools">
-                Scale: <input type="range" id="logoSize" min="50" max="250" value="110" oninput="resizeLogo(this.value)">
+                Scale:
+                <input
+                    type="range"
+                    id="logoSize"
+                    min="50"
+                    max="250"
+                    value="110"
+                    oninput="resizeLogo(this.value)"
+                >
                 <span id="sizeVal">110px</span>
             </div>
         </div>
 
+        <!-- University Name -->
         <div class="input-card">
             <label>University Name</label>
-            <input type="text" id="in-uni" class="text-input" placeholder="Type University Name..." oninput="updateView('uni')">
+
+            <input
+                type="text"
+                id="in-uni"
+                class="text-input"
+                placeholder="Type University Name..."
+                oninput="updateView('uni')"
+            >
+
             <div class="style-tools">
                 <select id="font-uni" onchange="updateView('uni')">
                     <option value="Arial">Arial</option>
                     <option value="'Times New Roman'">TNR</option>
                 </select>
-                <input type="number" id="sz-uni" value="20" oninput="updateView('uni')">
-                <button class="btn-tool active" id="b-uni" onclick="toggleS('uni','b')">B</button>
-                <button class="btn-tool active" id="al-uni-center" onclick="setAlign('uni','center')">C</button>
+
+                <input
+                    type="number"
+                    id="sz-uni"
+                    value="20"
+                    oninput="updateView('uni')"
+                    style="width:45px;"
+                >
+
+                <button
+                    class="btn-tool active"
+                    id="b-uni"
+                    onclick="toggleS('uni','b')"
+                >B</button>
+
+                <button
+                    class="btn-tool"
+                    id="al-uni-left"
+                    onclick="setAlign('uni','left')"
+                >L</button>
+
+                <button
+                    class="btn-tool active"
+                    id="al-uni-center"
+                    onclick="setAlign('uni','center')"
+                >C</button>
+
+                <button
+                    class="btn-tool"
+                    id="al-uni-right"
+                    onclick="setAlign('uni','right')"
+                >R</button>
             </div>
         </div>
 
+        <!-- Auto Generated Top Fields -->
         <div id="top-fields"></div>
 
+        <!-- Submission Type -->
         <div class="input-card">
             <label>Submission Type (Header)</label>
-            <select id="in-label-type" class="select-input" onchange="updateLabelType()">
+
+            <select
+                id="in-label-type"
+                class="select-input"
+                onchange="updateLabelType()"
+            >
                 <option value="">-- Select Type --</option>
                 <option value="LAB REPORT ON:">Lab Report</option>
                 <option value="ASSIGNMENT ON:">Assignment</option>
@@ -59,21 +138,39 @@
             </select>
         </div>
 
+        <!-- Auto Generated Bottom Fields -->
         <div id="bottom-fields"></div>
 
+        <!-- Group Members -->
         <div class="input-card">
             <label>Group Members</label>
+
             <div id="member-inputs"></div>
-            <button class="btn-add" onclick="addMember()">+ Add Member</button>
+
+            <button class="btn-add" onclick="addMember()">
+                + Add Member
+            </button>
         </div>
 
-        <button class="btn-dl" onclick="downloadPDF()">Generate & Download PDF</button>
+        <!-- Download -->
+        <button class="btn-dl" onclick="downloadPDF()">
+            Generate & Download PDF
+        </button>
+
     </aside>
 
+    <!-- =========================
+         Preview Pane
+    ========================== -->
     <main class="preview-pane">
+
         <div class="scrollable-preview">
             <div id="page-render">
-                <div id="out-logo-box" class="logo-area"><img id="viewLogo"></div>
+
+                <div id="out-logo-box" class="logo-area">
+                    <img id="viewLogo">
+                </div>
+
                 <div id="out-uni" class="uni-title"></div>
                 <div id="out-sem" class="dynamic-line"></div>
                 <div id="spacer-sem"></div>
@@ -81,26 +178,51 @@
                 <div id="out-course" class="dynamic-line"></div>
                 <div id="out-sec" class="dynamic-line"></div>
                 <div id="out-grp" class="dynamic-line"></div>
-                
+
                 <div id="out-label-box" class="label-on"></div>
                 <div id="out-top" class="dynamic-line"></div>
 
+                <!-- Submission Info -->
                 <div id="out-sub-info" class="sub-info">
-                    <div id="row-teach">Supervised By: <span id="out-teach"></span></div>
-                    <div id="row-me">Submitted By: <span id="out-me"></span></div>
+                    <div id="row-teach">
+                        Supervised By:
+                        <span id="out-teach"></span>
+                    </div>
+
+                    <div id="row-me">
+                        Submitted By:
+                        <span id="out-me"></span>
+                    </div>
                 </div>
 
+                <!-- Member Table -->
                 <table id="table-render" class="table-member">
-                    <thead><tr><th>Name</th><th>ID</th></tr></thead>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>ID</th>
+                        </tr>
+                    </thead>
                     <tbody id="member-body"></tbody>
                 </table>
-                
-                <div id="out-date-box" class="date-footer">Date of Submission: <span id="out-date"></span></div>
+
+                <!-- Date -->
+                <div id="out-date-box" class="date-footer"></div>
+
             </div>
         </div>
-        <div class="display-footer">© 2026 Mahim Hossain. All rights reserved.</div>
+
+        <!-- Footer -->
+        <div class="display-footer">
+            © 2026 Mahim Hossain. All rights reserved.
+        </div>
+
     </main>
 
+    <!-- =========================
+         Scripts
+    ========================== -->
     <script src="assets/js/script.js"></script>
+
 </body>
 </html>
