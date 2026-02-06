@@ -210,7 +210,11 @@ body {
 ========================= */
 .uni-title {
     font-weight: bold;
-    margin-bottom: 8px;
+    margin-bottom: 5px;
+}
+#out-dept { 
+    font-weight: bold; 
+    margin-bottom: 5px; 
 }
 
 .dynamic-line {
