@@ -1,6 +1,6 @@
 # 🎓 EduCover Pro — Elite Builder
 
-**A web-based professional cover page generator specifically designed for university lab reports and assignments. Features real-time preview, dynamic input fields, and high-quality PDF export.
+A web-based professional cover page generator specifically designed for university lab reports and assignments. Features real-time preview, dynamic input fields, and high-quality PDF export.
 ---
 
 ## 🔗 Live Demo
