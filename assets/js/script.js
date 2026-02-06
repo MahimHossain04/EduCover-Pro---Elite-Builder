@@ -91,8 +91,7 @@ document.getElementById('logoIn').onchange = (e) => {
 
 function downloadPDF() {
     const element = document.getElementById('page-render');
-    
-    // ডাউনলোড করার আগে এলিমেন্টটি যাতে পুরোপুরি রেন্ডার হয় তার জন্য সামান্য ওয়েট করা
+
     const opt = {
         margin: 0,
         filename: 'EduCover_Pro.pdf',
@@ -109,4 +108,5 @@ function downloadPDF() {
 
     html2pdf().from(element).set(opt).save();
 }
+
 
