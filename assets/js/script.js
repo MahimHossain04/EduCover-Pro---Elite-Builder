@@ -91,7 +91,12 @@ document.getElementById('logoIn').onchange = (e) => {
 
 function downloadPDF() {
     const element = document.getElementById('page-render');
-    html2pdf().from(element).set({ margin: 0, filename: 'Cover_Page.pdf', html2canvas: { scale: 3, useCORS: true }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } }).toPdf().get('pdf').then(pdf => {
-        for (let i = pdf.internal.getNumberOfPages(); i > 1; i--) { pdf.deletePage(i); }
-    }).save();
+    setTimeout(() => {
+        html2pdf().from(element).set({
+            margin: 0,
+            filename: 'EduCover_Pro.pdf',
+            html2canvas: { scale: 3, useCORS: true, letterRendering: true },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        }).save();
+    }, 500); 
 }
