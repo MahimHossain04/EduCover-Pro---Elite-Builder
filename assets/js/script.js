@@ -91,12 +91,22 @@ document.getElementById('logoIn').onchange = (e) => {
 
 function downloadPDF() {
     const element = document.getElementById('page-render');
-    setTimeout(() => {
-        html2pdf().from(element).set({
-            margin: 0,
-            filename: 'EduCover_Pro.pdf',
-            html2canvas: { scale: 3, useCORS: true, letterRendering: true },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        }).save();
-    }, 500); 
+    
+    // ডাউনলোড করার আগে এলিমেন্টটি যাতে পুরোপুরি রেন্ডার হয় তার জন্য সামান্য ওয়েট করা
+    const opt = {
+        margin: 0,
+        filename: 'EduCover_Pro.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { 
+            scale: 3, 
+            useCORS: true, 
+            letterRendering: true,
+            logging: false,
+            scrollY: 0
+        },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf().from(element).set(opt).save();
 }
+
