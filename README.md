@@ -8,7 +8,7 @@
 ## 🔗 Live Demo
 
 Experience the application live:  
-👉 **https://mahimhossain04.github.io/EduCover-Pro---Elite-Builder/**
+👉 **[https://mahimhossain04.github.io/EduCover-Pro---Elite-Builder/](https://mahimhossain04.github.io/EduCover-Pro---Elite-Builder/)**
 
 ---
 
