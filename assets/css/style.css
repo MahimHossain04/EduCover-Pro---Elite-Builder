@@ -23,11 +23,16 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; displ
     align-items: center; box-sizing: border-box; position: relative; margin-bottom: 40px;
 }
 
-/* Initially Hidden */
-.logo-area, .uni-title, .dynamic-line, .label-on, .sub-info, .table-member, .date-footer { visibility: hidden; width: 100%; text-align: center; }
-.visible { visibility: visible !important; }
+/* Initially Hidden - Using Opacity for better PDF rendering support */
+.logo-area, .uni-title, .dynamic-line, .label-on, .sub-info, .table-member, .date-footer { 
+    display: none; width: 100%; text-align: center; 
+}
 
-.logo-area { height: 140px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; }
+/* Visibility Fix for Mobile PDF */
+.visible { display: block !important; visibility: visible !important; }
+
+.logo-area { height: 140px; margin-bottom: 15px; align-items: center; justify-content: center; }
+.logo-area.visible { display: flex !important; }
 .logo-area img { max-width: 100%; height: auto; }
 .logo-area #viewLogo { width: 110px; }
 #spacer-sem { margin-top: 15px; display: none; }
@@ -41,7 +46,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; displ
 .sub-info div { margin: 5px 0; }
 
 .table-member { border-collapse: collapse; margin-top: 15px; table-layout: fixed; display: none; }
-.table-member.visible { display: table; visibility: visible; }
+.table-member.visible { display: table !important; visibility: visible !important; }
 .table-member th, .table-member td { border: 1.5px solid black; padding: 10px; text-align: left; font-weight: bold; }
 .table-member th:first-child { width: 65%; }
 
@@ -51,54 +56,22 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; displ
 .btn-add { background: var(--accent); color: white; border: none; padding: 8px; border-radius: 5px; width: 100%; cursor: pointer; margin-top: 5px; }
 .btn-dl { background: #27ae60; color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
 
+/* Mobile Responsive Design Update */
 @media (max-width: 768px) {
-    body {
-        flex-direction: column; 
-        overflow-y: auto;
-        height: auto;
+    body { flex-direction: column; overflow-y: auto; height: auto; }
+
+    .sidebar { width: 100%; height: auto; padding: 15px; box-shadow: none; box-sizing: border-box; }
+
+    .preview-pane { width: 100%; height: auto; padding: 10px 0; overflow: visible; }
+
+    .scrollable-preview { padding: 10px; width: 100%; box-sizing: border-box; }
+
+    #page-render { 
+        width: 100%; height: auto; min-height: auto; padding: 15mm 10mm; 
+        transform: scale(1); transform-origin: top center; margin-bottom: 20px; 
     }
 
-    .sidebar {
-        width: 100%; 
-        height: auto;
-        padding: 15px;
-        box-shadow: none;
-        box-sizing: border-box;
-    }
+    .style-tools { justify-content: space-between; }
 
-    .preview-pane {
-        width: 100%;
-        height: auto;
-        padding: 10px 0;
-        overflow: visible;
-    }
-
-    .scrollable-preview {
-        padding: 10px;
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-    #page-render {
-        width: 100%; 
-        height: auto;
-        min-height: auto;
-        padding: 15mm 10mm;
-        transform: scale(0.95); 
-        transform-origin: top center;
-        margin-bottom: 20px;
-    }
-
-   
-    .style-tools {
-        justify-content: space-between;
-    }
-
-    .btn-dl {
-        position: sticky;
-        bottom: 10px;
-        z-index: 1000;
-        width: 90%;
-        margin-left: 5%;
-    }
+    .btn-dl { position: sticky; bottom: 10px; z-index: 1000; width: 90%; margin-left: 5%; }
 }
