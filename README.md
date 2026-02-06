@@ -44,16 +44,23 @@ EduCover Pro - Elite Builder/
 ├── icons/
 │   └── icon.ico            # Project favicon
 └── README.md               # Project documentation
-🚀 Installation & Usage
+```
+
+## 🚀 Installation & Usage
 Local Setup
+
 Clone the repository:
-
 git clone https://github.com/mahimhossain04/EduCover-Pro---Elite-Builder.git
-Open the project:
 
+
+Open the project:
 cd EduCover-Pro---Elite-Builder
 open index.html
-🧭 How to Use
+
+---
+
+## 🧭 How to Use
+
 Upload your university or institution logo and adjust its scale.
 
 Enter academic details such as course name, course code, semester, and section.
@@ -64,7 +71,10 @@ Customize font sizes and emphasis according to departmental requirements.
 
 Export a professional, print-ready A4 PDF cover page.
 
-🎯 Use Cases
+---
+
+## 🎯 Use Cases
+
 University lab reports
 
 Course assignments
@@ -74,8 +84,10 @@ Academic projects
 Group submissions
 
 Professional academic documentation
+---
 
-📜 Credits & License
+## 📜 Credits & License
+
 Developer: Mahim Hossain
 
 Project Type: Academic Web Application
