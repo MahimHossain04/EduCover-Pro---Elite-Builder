@@ -27,6 +27,7 @@ function changePageSize(val) {
    Field Configurations
 ========================= */
 const fieldConfigs = [
+    { id: 'dept', label: 'Department', prefix: 'Department of ', sz: 18, align: 'center', pos: 'top' },
     { id: 'sem',    label: 'Semester',         prefix: 'Semester: ',       sz: 18, align: 'center', pos: 'top' },
     { id: 'code',   label: 'Course Code',      prefix: 'Course Code: ',    sz: 18, align: 'center', pos: 'top' },
     { id: 'course', label: 'Course Name',      prefix: 'Course Name: ',    sz: 19, align: 'center', pos: 'top' },
